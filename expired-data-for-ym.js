@@ -148,7 +148,6 @@ const CONFIG = {
         TOKEN_URL: "https://oauth2.googleapis.com/token"
     },
     MOMENCE_HEADERS: {
-        'Authorization': `Bearer ${process.env.MOMENCE_ACCESS_TOKEN}`,
         'Cookie': process.env.MOMENCE_ALL_COOKIES,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
