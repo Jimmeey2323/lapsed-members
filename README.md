@@ -46,10 +46,37 @@ GOOGLE_REFRESH_TOKEN=your_google_refresh_token
 
 ### Usage
 
-Run the script:
+Run the script manually:
 ```bash
 node expired-data-for-ym.js
 ```
+
+Or use npm:
+```bash
+npm start
+```
+
+## Railway Deployment (Automated Cron Job)
+
+This script is configured to run automatically on Railway as a cron job at 9:30 PM daily.
+
+### Quick Deployment
+
+1. **Deploy to Railway**:
+   - Go to [Railway Dashboard](https://railway.app/dashboard)
+   - Create new project from GitHub
+   - Select `Jimmeey2323/lapsed-members` repository
+
+2. **Configure Cron Schedule**:
+   - Set service type to "Cron Job"
+   - Cron schedule: `30 21 * * *` (9:30 PM UTC)
+   - For IST (9:30 PM): Use `0 16 * * *`
+
+3. **Set Environment Variables**:
+   - Add all variables from your `.env` file
+   - Required: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`
+
+📖 **For detailed deployment instructions, see [RAILWAY_DEPLOYMENT.md](./RAILWAY_DEPLOYMENT.md)**
 
 ## Configuration
 

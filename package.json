@@ -1,0 +1,27 @@
+{
+  "name": "lapsed-members-cron",
+  "version": "1.0.0",
+  "description": "Automated script to fetch and process expired member data from Momence",
+  "main": "expired-data-for-ym.js",
+  "scripts": {
+    "start": "node expired-data-for-ym.js",
+    "dev": "node expired-data-for-ym.js"
+  },
+  "keywords": [
+    "momence",
+    "members",
+    "cron",
+    "automation"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "googleapis": "^128.0.0",
+    "p-limit": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
