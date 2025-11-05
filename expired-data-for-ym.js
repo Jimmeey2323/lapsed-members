@@ -878,12 +878,7 @@ async function main() {
     pLimit = (await import('p-limit')).default;
     
     const startTime = Date.now();
-    const sheetService = new GoogleSheetService();
-
-    if (!CONFIG.MOMENCE_HEADERS.Cookie) {
-        console.error("FATAL: MOMENCE_AUTH_TOKEN is not defined in the .env file.");
-        process.exit(1);
-    }
+    const sheetService = new GoogleSheetService();   
 
     try {
         // Clear the sheet and write the new header row
