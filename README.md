@@ -94,8 +94,9 @@ If you encounter Google OAuth errors (like "invalid_client" or "invalid_grant"):
 
 ### Common Issues
 
-- **"OAuth client was not found"**: Your credentials are incorrect or missing in Railway
+- **"OAuth client was not found"**: Your credentials are incorrect or missing in Railway → See [FIX_OAUTH_ERROR.md](./FIX_OAUTH_ERROR.md)
 - **"Invalid grant"**: Your refresh token has expired - generate a new one
+- **"401 Unauthorized from Momence API"**: Momence cookies are missing or expired → See [FIX_MOMENCE_401.md](./FIX_MOMENCE_401.md)
 - **Script fails locally**: Check your `.env` file has correct values
 
 For detailed solutions, see [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)

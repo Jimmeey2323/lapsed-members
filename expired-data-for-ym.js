@@ -11,6 +11,10 @@ function validateEnvironment() {
         'GOOGLE_REFRESH_TOKEN': process.env.GOOGLE_REFRESH_TOKEN
     };
 
+    const optionalButImportant = {
+        'MOMENCE_ALL_COOKIES': process.env.MOMENCE_ALL_COOKIES
+    };
+
     const missing = [];
     const invalid = [];
 
@@ -51,7 +55,16 @@ function validateEnvironment() {
     console.log('✅ Environment variables validated successfully');
     console.log(`   CLIENT_ID: ${process.env.GOOGLE_CLIENT_ID.substring(0, 20)}...`);
     console.log(`   CLIENT_SECRET: ${process.env.GOOGLE_CLIENT_SECRET.substring(0, 10)}...`);
-    console.log(`   REFRESH_TOKEN: ${process.env.GOOGLE_REFRESH_TOKEN.substring(0, 10)}...\n`);
+    console.log(`   REFRESH_TOKEN: ${process.env.GOOGLE_REFRESH_TOKEN.substring(0, 10)}...`);
+    
+    // Check for Momence cookies
+    if (!optionalButImportant.MOMENCE_ALL_COOKIES) {
+        console.log('\n⚠️  Warning: MOMENCE_ALL_COOKIES not set');
+        console.log('   The script will fail to fetch Momence API data without valid cookies.');
+        console.log('   Add MOMENCE_ALL_COOKIES to Railway Variables if you see 401 errors.\n');
+    } else {
+        console.log(`   MOMENCE_COOKIES: Set (${process.env.MOMENCE_ALL_COOKIES.substring(0, 30)}...)\n`);
+    }
 }
 
 // Run validation
