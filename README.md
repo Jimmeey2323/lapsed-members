@@ -46,14 +46,26 @@ GOOGLE_REFRESH_TOKEN=your_google_refresh_token
 
 ### Usage
 
-Run the script manually:
+**Automated (Railway Cron):**
+- Runs automatically at 9:30 PM daily
+- See deployment instructions below
+
+**Manual Terminal Run:**
 ```bash
-node expired-data-for-ym.js
+# Interactive mode with prompts and colored output
+npm run manual
+
+# Or run directly
+node manual-run.js
 ```
 
-Or use npm:
+**Standard Run:**
 ```bash
+# Run without prompts (for cron/automation)
 npm start
+
+# Or
+node expired-data-for-ym.js
 ```
 
 ## Railway Deployment (Automated Cron Job)

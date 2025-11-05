@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node expired-data-for-ym.js",
     "dev": "node expired-data-for-ym.js",
+    "manual": "node manual-run.js",
     "generate-token": "node generate-refresh-token.js"
   },
   "keywords": [
