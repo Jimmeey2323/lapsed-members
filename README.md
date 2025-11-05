@@ -78,6 +78,28 @@ This script is configured to run automatically on Railway as a cron job at 9:30 
 
 📖 **For detailed deployment instructions, see [RAILWAY_DEPLOYMENT.md](./RAILWAY_DEPLOYMENT.md)**
 
+## Troubleshooting
+
+### OAuth Errors
+
+If you encounter Google OAuth errors (like "invalid_client" or "invalid_grant"):
+
+1. **See the [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) guide** for detailed solutions
+2. **Generate new credentials** using:
+   ```bash
+   npm install googleapis
+   npm run generate-token
+   ```
+3. **Update Railway Variables** with the new credentials
+
+### Common Issues
+
+- **"OAuth client was not found"**: Your credentials are incorrect or missing in Railway
+- **"Invalid grant"**: Your refresh token has expired - generate a new one
+- **Script fails locally**: Check your `.env` file has correct values
+
+For detailed solutions, see [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
+
 ## Configuration
 
 The script includes several configurable options in the `CONFIG` object:

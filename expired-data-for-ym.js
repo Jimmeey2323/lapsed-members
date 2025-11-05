@@ -3,6 +3,60 @@ require('dotenv').config();
 const axios = require('axios');
 let pLimit;
 
+// --- ENVIRONMENT VALIDATION ---
+function validateEnvironment() {
+    const requiredVars = {
+        'GOOGLE_CLIENT_ID': process.env.GOOGLE_CLIENT_ID,
+        'GOOGLE_CLIENT_SECRET': process.env.GOOGLE_CLIENT_SECRET,
+        'GOOGLE_REFRESH_TOKEN': process.env.GOOGLE_REFRESH_TOKEN
+    };
+
+    const missing = [];
+    const invalid = [];
+
+    for (const [varName, value] of Object.entries(requiredVars)) {
+        if (!value) {
+            missing.push(varName);
+        } else if (value.trim() === '') {
+            invalid.push(varName);
+        }
+    }
+
+    if (missing.length > 0 || invalid.length > 0) {
+        console.error('\n❌ Environment Variable Error:\n');
+        
+        if (missing.length > 0) {
+            console.error('Missing required environment variables:');
+            missing.forEach(v => console.error(`  - ${v}`));
+        }
+        
+        if (invalid.length > 0) {
+            console.error('Empty/invalid environment variables:');
+            invalid.forEach(v => console.error(`  - ${v}`));
+        }
+        
+        console.error('\n📝 How to fix:');
+        console.error('1. In Railway dashboard, go to your service');
+        console.error('2. Click on "Variables" tab');
+        console.error('3. Add the missing variables with correct values from your .env file\n');
+        console.error('Required variables:');
+        console.error('  GOOGLE_CLIENT_ID       = your Google OAuth Client ID');
+        console.error('  GOOGLE_CLIENT_SECRET   = your Google OAuth Client Secret');
+        console.error('  GOOGLE_REFRESH_TOKEN   = your Google OAuth Refresh Token\n');
+        
+        process.exit(1);
+    }
+
+    // Log successful validation (masked for security)
+    console.log('✅ Environment variables validated successfully');
+    console.log(`   CLIENT_ID: ${process.env.GOOGLE_CLIENT_ID.substring(0, 20)}...`);
+    console.log(`   CLIENT_SECRET: ${process.env.GOOGLE_CLIENT_SECRET.substring(0, 10)}...`);
+    console.log(`   REFRESH_TOKEN: ${process.env.GOOGLE_REFRESH_TOKEN.substring(0, 10)}...\n`);
+}
+
+// Run validation
+validateEnvironment();
+
 // --- CONFIGURATION ---
 const CONFIG = {
     GOOGLE_SHEET_ID: "18f-vMwJl9vrKPXkpP-ZXVr6bLADkCZfykKgZEyA3WWo",
@@ -232,8 +286,33 @@ class GoogleSheetService {
             this.tokenExpiry = Date.now() + (tokenData.expires_in - 300) * 1000;
             return this.accessToken;
         } catch (error) {
-            console.error("Fatal: Failed to refresh Google access token.", error.response?.data || error.message);
-            throw new Error("Could not get Google access token.");
+            console.error("❌ Fatal: Failed to refresh Google access token.");
+            
+            if (error.response?.data) {
+                console.error("Error details:", JSON.stringify(error.response.data, null, 2));
+                
+                // Provide specific help for common errors
+                if (error.response.data.error === 'invalid_client') {
+                    console.error("\n💡 This error means:");
+                    console.error("   - The CLIENT_ID or CLIENT_SECRET is incorrect");
+                    console.error("   - The OAuth client might have been deleted or revoked");
+                    console.error("\n🔧 How to fix:");
+                    console.error("   1. Verify your GOOGLE_CLIENT_ID in Railway Variables");
+                    console.error("   2. Verify your GOOGLE_CLIENT_SECRET in Railway Variables");
+                    console.error("   3. Check if the OAuth client still exists in Google Cloud Console");
+                    console.error("   4. You may need to create a new OAuth client and update the credentials\n");
+                } else if (error.response.data.error === 'invalid_grant') {
+                    console.error("\n💡 This error means:");
+                    console.error("   - The REFRESH_TOKEN has expired or been revoked");
+                    console.error("\n🔧 How to fix:");
+                    console.error("   1. Generate a new refresh token");
+                    console.error("   2. Update GOOGLE_REFRESH_TOKEN in Railway Variables\n");
+                }
+            } else {
+                console.error("Error:", error.message);
+            }
+            
+            throw new Error("Could not get Google access token. Check the error details above.");
         }
     }
 

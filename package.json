@@ -5,7 +5,8 @@
   "main": "expired-data-for-ym.js",
   "scripts": {
     "start": "node expired-data-for-ym.js",
-    "dev": "node expired-data-for-ym.js"
+    "dev": "node expired-data-for-ym.js",
+    "generate-token": "node generate-refresh-token.js"
   },
   "keywords": [
     "momence",
